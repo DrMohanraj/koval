@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+function slugify(name: string) {
+  return name.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\u0B80-\u0BFF-]/g, '');
+}
+
+const interviews = await getCollection('interviews');
+const sorted = interviews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = [...new Set(sorted.map((i) => i.data.category))];
+---
+<BaseLayout title="காப்பகம் - கூவல்">
+  <section class="px-margin-desktop pt-section-gap pb-stack-lg text-center reveal active">
+    <p class="font-label-caps text-label-caps text-tertiary mb-3">THE LIVING REPOSITORY</p>
+    <h1 class="font-display-lg text-display-lg text-primary mb-6">காப்பகம்</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">தமிழ் சிந்தனை, கலை, இலக்கிய சிறப்பின் ஆழத்தை ஆராயும் நேர்காணல்களின் தொகுப்பு.</p>
+  </section>
+
+  <section class="px-margin-desktop flex flex-wrap gap-3 justify-center mb-stack-lg reveal active">
+    <button class="filter-btn active bg-primary text-on-primary px-5 py-2 rounded-full font-label-caps text-label-caps" data-filter="all">All Categories</button>
+    {categories.map((cat) => (
+      <button class="filter-btn bg-surface-container text-on-surface px-5 py-2 rounded-full font-label-caps text-label-caps hover:bg-primary-container transition-colors" data-filter={cat}>{cat}</button>
+    ))}
+  </section>
+
+  <section class="px-margin-desktop pb-section-gap">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="interview-grid">
+      {sorted.length === 0 && (
+        <p class="col-span-3 text-center font-body-md text-on-surface-variant py-section-gap">
+          இன்னும் நேர்காணல்கள் சேர்க்கப்படவில்லை. <a href="/admin" class="text-primary underline">/admin</a> மூலம் முதல் நேர்காணலைச் சேருங்கள்.
+        </p>
+      )}
+      {sorted.map((entry) => (
+        <div data-category={entry.data.category} data-tags={(entry.data.tags || []).join(',')}
+             class="interview-card reveal active magazine-lift bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/30">
+          <a href={`/interview/${entry.slug}`} class="block no-underline">
+            <div class="aspect-[4/3] overflow-hidden relative">
+              <span class="absolute top-3 left-3 z-10 bg-surface/90 text-primary font-label-caps text-label-caps px-3 py-1 rounded-full">{entry.data.category}</span>
+              <img src={entry.data.coverImage} alt={entry.data.authorName} class="w-full h-full object-cover" />
+            </div>
+          </a>
+          <div class="p-stack-md">
+            <span class="font-caption text-caption text-on-surface-variant">{entry.data.date.toLocaleDateString('ta-IN', { year: 'numeric', month: 'long' })} {entry.data.issueNumber ? `• இதழ் ${entry.data.issueNumber}` : ''}</span>
+            <a href={`/interview/${entry.slug}`} class="block no-underline">
+              <h3 class="font-headline-md text-headline-md text-primary mt-2 mb-2">{entry.data.title}</h3>
+            </a>
+            <p class="font-caption text-caption text-on-surface-variant mb-3">{entry.data.excerpt}</p>
+            {entry.data.tags && entry.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mb-3">
+                {entry.data.tags.map((tag) => (
+                  <span class="font-caption text-[10px] bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full">{tag}</span>
+                ))}
+              </div>
+            )}
+            <a href={`/author/${slugify(entry.data.authorName)}`} class="font-caption text-caption text-secondary hover:text-primary hover:underline transition-colors">By {entry.data.authorName}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.interview-card');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active', 'bg-primary', 'text-on-primary'));
+        btn.classList.add('active', 'bg-primary', 'text-on-primary');
+        const filter = btn.getAttribute('data-filter');
+        cards.forEach((card) => {
+          const match = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.style.display = match ? '' : 'none';
+        });
+      });
+    });
+
+    // URL-ல் ?tag=xxx இருந்தா (footer tag cloud-ல் இருந்து வந்தா), அதற்கு ஏற்ப pre-filter பண்ணுதல்
+    const urlParams = new URLSearchParams(window.location.search);
+    const tagFilter = urlParams.get('tag');
+    if (tagFilter) {
+      buttons.forEach((b) => b.classList.remove('active', 'bg-primary', 'text-on-primary'));
+      cards.forEach((card) => {
+        const cardTags = (card.getAttribute('data-tags') || '').split(',');
+        card.style.display = cardTags.includes(tagFilter) ? '' : 'none';
+      });
+    }
+  </script>
+</BaseLayout>

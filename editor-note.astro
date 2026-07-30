@@ -1,0 +1,302 @@
+---
+import { getCollection } from 'astro:content';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "கூவல் - இலக்கிய இதழ்",
+  description = "தமிழ்ச் சமூகத்தின் பன்மைத்துவத்தை கலை - இலக்கிய - சூழலியல் ஆளுமைகளின் நேர்காணல் மூலம் உணர ஓர் முன்னெடுப்பு",
+} = Astro.props;
+
+// Footer tag cloud-க்காக எல்லா interviews-இன் tags-ஐயும் தனிப்பட்ட (unique) பட்டியலா சேகரித்தல்
+const allInterviews = await getCollection('interviews');
+const allTags = [...new Set(allInterviews.flatMap((entry) => entry.data.tags || []))];
+---
+<!DOCTYPE html>
+<html lang="ta" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <script is:inline src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Netlify Identity widget: இது இல்லாம invite/password-set links வேலை செய்யாது -->
+  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script is:inline>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Noto+Serif+Tamil:wght@100..900&family=Catamaran:wght@100..900&family=Manrope:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <!--
+    ==========================================================
+    கூவல் (Koovel) - இலக்கிய இதழ் இணையதளம்
+    Placeholder content-ஐ Netlify CMS (/admin) மூலம் edit செய்யலாம்.
+    ==========================================================
+  -->
+  <script id="tailwind-config" is:inline>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#EFE7D9",
+            "on-tertiary-container": "#233420",
+            "surface-dim": "#ECE4D4",
+            "primary": "#1B4D91",
+            "on-error": "#FFFFFF",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#FFFFFF",
+            "error": "#ba1a1a",
+            "background": "#FBF8F2",
+            "surface-variant": "#E8DDC9",
+            "primary-fixed-dim": "#A8C5E8",
+            "secondary-fixed-dim": "#B7D2ED",
+            "tertiary-container": "#82AB7D",
+            "on-tertiary": "#FFFFFF",
+            "inverse-primary": "#A8C5E8",
+            "inverse-surface": "#1C2E42",
+            "on-primary-container": "#0F2A4A",
+            "on-surface": "#1A2938",
+            "tertiary-fixed-dim": "#A9C7A0",
+            "surface-tint": "#1B4D91",
+            "secondary": "#4F7FBF",
+            "surface-container-highest": "#E8DDC9",
+            "outline": "#6A6B4E",
+            "on-secondary-fixed": "#0F2A4A",
+            "on-tertiary-fixed": "#233420",
+            "on-secondary": "#FFFFFF",
+            "tertiary-fixed": "#DCE8D6",
+            "surface-container-low": "#F8F4EC",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#E4EDF9",
+            "on-surface-variant": "#6A6B4E",
+            "on-secondary-fixed-variant": "#2F5C8F",
+            "primary-container": "#4F7FBF",
+            "on-primary-fixed": "#0F2A4A",
+            "surface": "#FBF8F2",
+            "surface-bright": "#FDFBF7",
+            "outline-variant": "#DDD3BC",
+            "surface-container": "#F4EEE2",
+            "on-primary-fixed-variant": "#1B4D91",
+            "secondary-container": "#E4EDF9",
+            "on-primary": "#FFFFFF",
+            "inverse-on-surface": "#FBF8F2",
+            "on-tertiary-fixed-variant": "#4F7049",
+            "on-secondary-container": "#1B4D91",
+            "tertiary": "#4F7049",
+            "on-background": "#1A2938",
+            "secondary-fixed": "#EDF3FB"
+          },
+          "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          "spacing": {
+            "margin-desktop": "80px", "stack-lg": "32px", "stack-sm": "8px",
+            "gutter": "32px", "section-gap": "120px", "margin-mobile": "24px", "stack-md": "16px"
+          },
+          "fontFamily": {
+            "body-lg": ["Catamaran"], "label-caps": ["Manrope"],
+            "display-lg-mobile": ["Bodoni Moda"], "headline-md": ["Noto Serif Tamil"],
+            "display-lg": ["Bodoni Moda"], "body-md": ["Catamaran"], "caption": ["Manrope"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", {"lineHeight": "32px", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+            "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}],
+            "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+            "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-md": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+            "caption": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .botanical-accent { filter: opacity(0.15) grayscale(0.2); pointer-events: none; }
+    .magazine-lift { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; }
+    .magazine-lift:hover { transform: translateY(-8px) rotate(0.5deg); box-shadow: 0 20px 40px -10px rgba(27, 77, 145, 0.12); }
+    body { background-color: #FBF8F2; color: #1A2938; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #FBF8F2; }
+    ::-webkit-scrollbar-thumb { background: #DDD3BC; border-radius: 10px; }
+
+    /* Dark glassmorphism hero utilities (கூவல் hero split-view-க்காக) */
+    .glass-orb {
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.07) 45%, rgba(0,0,0,0.35) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.25), inset -8px -8px 18px rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.3);
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    @keyframes float-slow { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+    @keyframes float-delayed { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(8px) rotate(-1deg); } }
+    .animate-float { animation: float-slow 7s ease-in-out infinite; }
+    .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite 1s; }
+  </style>
+</head>
+<body class="font-body-md text-body-md">
+  <!-- Left Sidebar Navigation (Solladal-style layout, கூவல் brand colors) -->
+  <aside id="koovelSidebar" class="fixed top-0 left-0 bottom-0 z-50 w-[220px] lg:w-[240px] bg-primary text-white flex flex-col justify-between p-6 lg:p-7 shadow-2xl transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+    <div class="flex flex-col space-y-8">
+      <a href="/" class="cursor-pointer group flex flex-col space-y-1 no-underline">
+        <h1 class="font-headline-md text-3xl lg:text-4xl font-bold tracking-wide text-white drop-shadow-sm group-hover:text-white/90 transition-colors">கூவல்</h1>
+        <span class="text-[10px] uppercase tracking-widest text-white/70 font-label-caps font-medium">Koovel Magazine</span>
+      </a>
+
+      <nav class="flex flex-col space-y-0.5 pt-2">
+        <a href="/archive" class="group w-full text-left py-3 px-1 border-b border-white/15 flex items-center justify-between transition-all duration-200 text-white/85 hover:text-white hover:border-white/40 hover:translate-x-1 no-underline">
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base tracking-wide leading-tight">நேர்காணல்கள்</span>
+            <span class="text-[10px] text-white/60 font-label-caps font-light">Interviews</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-white/60 group-hover:text-white transition-colors">explore</span>
+        </a>
+        <a href="/issues" class="group w-full text-left py-3 px-1 border-b border-white/15 flex items-center justify-between transition-all duration-200 text-white/85 hover:text-white hover:border-white/40 hover:translate-x-1 no-underline">
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base tracking-wide leading-tight">இதழ்கள்</span>
+            <span class="text-[10px] text-white/60 font-label-caps font-light">Magazines</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-white/60 group-hover:text-white transition-colors">menu_book</span>
+        </a>
+        <a href="/collections" class="group w-full text-left py-3 px-1 border-b border-white/15 flex items-center justify-between transition-all duration-200 text-white/85 hover:text-white hover:border-white/40 hover:translate-x-1 no-underline">
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base tracking-wide leading-tight">தொகுப்பு</span>
+            <span class="text-[10px] text-white/60 font-label-caps font-light">Anthology</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-white/60 group-hover:text-white transition-colors">layers</span>
+        </a>
+        <a href="/about" class="group w-full text-left py-3 px-1 border-b border-white/15 flex items-center justify-between transition-all duration-200 text-white/85 hover:text-white hover:border-white/40 hover:translate-x-1 no-underline">
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base tracking-wide leading-tight">எங்களைப் பற்றி</span>
+            <span class="text-[10px] text-white/60 font-label-caps font-light">About Us</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-white/60 group-hover:text-white transition-colors">info</span>
+        </a>
+
+        <div class="pt-3">
+          <span class="material-symbols-outlined text-white/80 cursor-pointer">search</span>
+        </div>
+      </nav>
+    </div>
+
+    <div class="pt-6">
+      <a href="/newsletter" class="w-full bg-white text-primary hover:bg-white/90 hover:shadow-lg font-label-caps font-medium text-xs py-2.5 px-6 rounded-full transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 shadow-md no-underline">
+        <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+        <span>Subscribe</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Mobile top bar (sidebar hidden below lg breakpoint, this replaces it) -->
+  <header class="lg:hidden sticky top-0 w-full z-40 bg-primary text-white flex items-center justify-between px-margin-mobile py-stack-sm shadow-md">
+    <a href="/" class="font-headline-md text-xl text-white no-underline">கூவல்</a>
+    <button id="mobileSidebarToggle" class="text-white p-2" aria-label="Menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </header>
+
+  <main class="lg:ml-[240px]">
+    <slot />
+  </main>
+
+  <footer class="bg-surface border-t border-outline-variant/50 pt-stack-lg mt-section-gap lg:ml-[240px]">
+    <div class="px-margin-desktop pt-stack-lg">
+      <div class="bg-surface-variant/50 rounded-2xl p-stack-md md:p-stack-lg flex flex-col md:flex-row items-center justify-between gap-stack-md border border-white/40 reveal active">
+        <div class="text-center md:text-left">
+          <h2 class="font-headline-md text-headline-md text-primary">Join the <span class="italic">Dialogue</span></h2>
+          <p class="font-caption text-caption text-on-surface-variant mt-1">மாதாந்திர கட்டுரைகள், தனிச்சிறப்பு நேர்காணல்கள் உங்கள் இன்பாக்ஸில்.</p>
+        </div>
+        <form name="newsletter" method="POST" data-netlify="true" class="flex w-full md:w-auto gap-3">
+          <input type="hidden" name="form-name" value="newsletter" />
+          <input class="flex-1 md:w-64 bg-surface border-b border-outline focus:border-primary focus:ring-0 px-4 py-3 font-body-md text-sm transition-all outline-none rounded-sm" placeholder="உங்களது மின்னஞ்சல்" type="email" name="email" required />
+          <button class="bg-primary text-on-primary px-6 py-3 rounded-full font-label-caps text-label-caps hover:bg-primary-container transition-all whitespace-nowrap" type="submit">SUBSCRIBE</button>
+        </form>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop py-section-gap max-w-full mx-auto">
+      <div>
+        <div class="font-headline-md text-headline-md text-primary mb-6">கூவல்</div>
+        <p class="font-caption text-caption text-on-surface-variant/80 max-w-xs">தமிழ்ச் சமூகத்தின் பன்மைத்துவத்தை கலை - இலக்கிய - சூழலியல் ஆளுமைகளின் நேர்காணல் மூலம் உணர ஓர் முன்னெடுப்பு</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="flex flex-col gap-2">
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="/newsletter">Newsletter</a>
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="/about">Privacy Policy</a>
+          <a class="font-caption text-caption text-on-surface-variant/80 hover:text-primary transition-all" href="/contact">Contact</a>
+        </div>
+      </div>
+      <div class="flex flex-col items-end justify-between">
+        <div class="flex gap-4">
+          <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">language</span>
+          <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">bookmark</span>
+        </div>
+        <p class="font-caption text-caption text-on-surface-variant/80 mt-4 md:mt-0 text-right">© 2026 கூவல் இணைய இதழ்</p>
+      </div>
+    </div>
+    {allTags.length > 0 && (
+      <div class="px-margin-desktop pb-stack-lg border-t border-outline-variant/30 pt-stack-md">
+        <div class="flex flex-wrap gap-2">
+          {allTags.map((tag) => (
+            <a href={`/archive?tag=${encodeURIComponent(tag)}`} class="font-caption text-[11px] bg-surface-container text-on-surface-variant px-3 py-1 rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors no-underline">{tag}</a>
+          ))}
+        </div>
+      </div>
+    )}
+  </footer>
+
+  <script is:inline>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile sidebar toggle
+    const sidebarToggle = document.getElementById('mobileSidebarToggle');
+    const sidebar = document.getElementById('koovelSidebar');
+    if (sidebarToggle && sidebar) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebar.classList.toggle('translate-x-0');
+      });
+    }
+
+    // 3D tilt for any .pm-card / .magazine-lift on the page
+    document.querySelectorAll('.pm-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rx = ((y / rect.height) - 0.5) * -8;
+        const ry = ((x / rect.width) - 0.5) * 8;
+        card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+  </script>
+</body>
+</html>
