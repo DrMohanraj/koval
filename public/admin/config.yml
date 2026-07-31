@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: DrMohanraj/koval   # ⚠️ இதை உங்க actual GitHub username/repo-ஆ மாத்துங்க
+  repo: https://github.com/DrMohanraj/koval   # ⚠️ இதை உங்க actual GitHub username/repo-ஆ மாத்துங்க
   branch: main
   base_url: https://koval.pomohanraj.workers.dev/       # ⚠️ இதை உங்க Cloudflare Pages domain-ஆ மாத்துங்க
   auth_endpoint: auth
