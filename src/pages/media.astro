@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="காணொளி - கூவல்">
+<!-- Gallery Grid -->
+<div class="masonry-grid mt-stack-lg">
+<!-- Item 1: Large Portrait -->
+<div class="masonry-item group cursor-pointer" onclick="openLightbox(0)">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)]">
+<img class="w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A high-quality editorial portrait of an elderly Tamil scholar reading a palm-leaf manuscript by a sunlit window. The lighting is warm and natural, creating soft shadows across the parchment. The color palette features rich earthy tones, soft creams, and lavender accents in the background fabrics. The overall mood is scholarly, serene, and deeply traditional yet refined." src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&h=675&fit=crop&q=80"/>
+<div class="absolute inset-0 gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<p class="font-label-caps text-label-caps text-white mb-1">PORTRAITS</p>
+<h3 class="font-headline-md text-white text-xl">The Last Scribe</h3>
+</div>
+</div>
+</div>
+<!-- Item 2: Landscape Event -->
+<div class="masonry-item group cursor-pointer" onclick="openLightbox(1)">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)]">
+<img class="w-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A wide-angle landscape shot of a traditional Tamil literary gathering held in a botanical garden pavilion during the golden hour. Elegant sage and lavender floral arrangements decorate the wooden pillars. The scene is illuminated by soft, natural sunset light filtering through lush tropical leaves. The atmosphere is sophisticated and celebratory, focusing on guests in elegant attire engaging in intellectual discussion." src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=800&h=1000&fit=crop&q=80"/>
+<div class="absolute inset-0 gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<p class="font-label-caps text-label-caps text-white mb-1">EVENTS</p>
+<h3 class="font-headline-md text-white text-xl">Sangam Meet 2024</h3>
+</div>
+</div>
+</div>
+<!-- Item 3: Video Snippet (Visual Representation) -->
+<div class="masonry-item group relative">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)] bg-surface-container">
+<img class="w-full object-cover" data-alt="A cinematic still from a documentary feature showing a close-up of a fountain pen gliding over handmade textured paper with elegant Tamil calligraphy. The lighting is low-key with a single dramatic spotlight highlighting the ink's sheen. The surrounding environment is a minimalist study filled with stacks of old books. The style is moody and intellectual, using a palette of deep purple and warm cream." src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=800&h=1000&fit=crop&q=80"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-primary/40 to-transparent">
+<p class="font-label-caps text-label-caps text-white">DOCUMENTARY SNIPPET</p>
+<h3 class="font-headline-md text-white text-lg">Ink &amp; Identity</h3>
+</div>
+</div>
+</div>
+<!-- Item 4: Detail Shot -->
+<div class="masonry-item group cursor-pointer" onclick="openLightbox(2)">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)]">
+<img class="w-full object-cover" data-alt="A minimalist macro photograph of a single dried lavender sprig lying across an open book with delicate Tamil script. The background is a soft, out-of-focus cream-colored linen surface. The lighting is diffused and airy, emphasizing the textures of the paper and the botanical detail. The aesthetic is clean, luxurious, and meditative, perfectly capturing the refined botanical luxury theme." src="https://images.unsplash.com/photo-1516575334481-f85287c2c82d?w=800&h=1000&fit=crop&q=80"/>
+<div class="absolute inset-0 gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<p class="font-label-caps text-label-caps text-white mb-1">STILL LIFE</p>
+<h3 class="font-headline-md text-white text-xl">Silent Prose</h3>
+</div>
+</div>
+</div>
+<!-- Item 5: Architecture/Setting -->
+<div class="masonry-item group cursor-pointer" onclick="openLightbox(3)">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)]">
+<img class="w-full object-cover group-hover:grayscale transition-all duration-700" data-alt="An architectural interior shot of a modern minimalist library featuring high ceilings and floor-to-ceiling windows looking out onto a misty botanical garden. The interior design uses light wood, sage green accents, and built-in shelving filled with colorful books. The atmosphere is calm and expansive, filled with soft morning light. The style is high-end contemporary editorial photography." src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&h=800&fit=crop&q=80"/>
+<div class="absolute inset-0 gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<p class="font-label-caps text-label-caps text-white mb-1">SPACES</p>
+<h3 class="font-headline-md text-white text-xl">The Quiet Room</h3>
+</div>
+</div>
+</div>
+<!-- Item 6: Cultural Portrait -->
+<div class="masonry-item group cursor-pointer" onclick="openLightbox(4)">
+<div class="relative overflow-hidden rounded-xl shadow-[0px_4px_24px_rgba(105,36,117,0.04)]">
+<img class="w-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A portrait of a young Tamil classical dancer in mid-motion, with the silk of their vibrant purple and gold saree creating a blurred wave of color. The background is a neutral sage green studio wall. The lighting is dramatic, highlighting the dancer's expressive hands and intricate jewelry. The overall mood is dynamic yet elegant, celebrating cultural movement and heritage in a modern photographic style." src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800&h=1000&fit=crop&q=80"/>
+<div class="absolute inset-0 gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<p class="font-label-caps text-label-caps text-white mb-1">PERFORMANCE</p>
+<h3 class="font-headline-md text-white text-xl">Rhythm in Stillness</h3>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Section -->
+<div class="flex justify-center mt-section-gap mb-section-gap reveal">
+<button class="flex items-center gap-2 px-8 py-4 border border-outline-variant text-primary font-label-caps text-label-caps rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+                EXPLORE ARCHIVE
+                <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</BaseLayout>
+
+<script is:inline>
+// Reveal Animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Lightbox Logic
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        const lbTitle = document.getElementById('lightbox-title');
+        
+        function openLightbox(index) {
+            const items = document.querySelectorAll('.masonry-item');
+            const target = items[index];
+            const title = target.querySelector('h3').innerText;
+            const img = target.querySelector('img').src;
+            
+            lbImg.src = img;
+            lbTitle.innerText = title;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+</script>

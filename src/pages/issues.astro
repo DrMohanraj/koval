@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const issues = [
+  { num: "12", year: "2024", cover: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&h=520&fit=crop&q=80" },
+  { num: "11", year: "2023", cover: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=520&fit=crop&q=80" },
+  { num: "10", year: "2023", cover: "https://images.unsplash.com/photo-1516575334481-f85287c2c82d?w=400&h=520&fit=crop&q=80" },
+  { num: "09", year: "2023", cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=520&fit=crop&q=80" },
+  { num: "08", year: "2022", cover: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400&h=520&fit=crop&q=80" },
+  { num: "07", year: "2022", cover: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=520&fit=crop&q=80" },
+  { num: "06", year: "2022", cover: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=520&fit=crop&q=80" },
+  { num: "05", year: "2021", cover: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=520&fit=crop&q=80" },
+  { num: "04", year: "2021", cover: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=520&fit=crop&q=80" },
+  { num: "03", year: "2021", cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=520&fit=crop&q=80" },
+];
+---
+<BaseLayout title="இதழ்கள் - கூவல்">
+<section class="px-margin-desktop py-stack-lg">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-stack-md">
+{issues.map((issue) => (
+<div class="reveal active group">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container-high rounded-md shadow-[0_6px_16px_rgba(105,36,117,0.08)]">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={issue.cover} alt={`Issue ${issue.num}`} />
+<div class="absolute inset-0 bg-gradient-to-t from-primary/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<p class="font-label-caps text-[10px] text-on-surface-variant text-center mt-2">இதழ் #{issue.num} • {issue.year}</p>
+</div>
+))}
+</div>
+</section>
+</BaseLayout>
+
+<script is:inline>
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, observerOptions);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>

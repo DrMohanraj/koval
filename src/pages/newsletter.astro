@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="செய்திமடல் - கூவல்">
+<!-- Atmospheric Background Elements -->
+<div class="absolute inset-0 z-0 pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-secondary-container/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-tertiary-fixed/20 rounded-full blur-[100px]"></div>
+<div class="botanical-overlay absolute inset-0 opacity-40"></div>
+</div>
+<!-- Main Signup Content -->
+<div class="relative z-10 w-full max-w-4xl grid md:grid-cols-2 bg-surface-container-low rounded-xl shadow-[0_20px_50px_rgba(105,36,117,0.06)] overflow-hidden border border-outline-variant/20 reveal">
+<!-- Left Side: Visual/Context -->
+<div class="hidden md:block relative h-full min-h-[500px]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="An ethereal, high-end editorial photograph of dried botanical leaves and antique parchment paper arranged on a minimalist cream surface. The lighting is soft and directional, casting long, delicate shadows. The scene incorporates a palette of deep violet, sage green, and warm ivory, reflecting a sophisticated literary and botanical luxury brand identity." style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&h=675&fit=crop&q=80')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+<div class="absolute bottom-10 left-10 right-10 text-on-primary">
+<p class="font-label-caps text-label-caps mb-2 opacity-80">Exclusive Access</p>
+<h3 class="font-headline-md text-headline-md mb-4 leading-tight">Delving into the depths of Tamil thought.</h3>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-caption text-caption">Join 5,000+ intellectual subscribers</span>
+</div>
+</div>
+</div>
+<!-- Right Side: The Form -->
+<div class="p-stack-lg md:p-16 flex flex-col justify-center bg-surface-bright">
+<div class="mb-10">
+<span class="text-primary font-label-caps text-label-caps mb-4 block">Newsletter</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6 leading-none">Join the Dialogue</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                        Receive monthly curations of exclusive interviews, archival discoveries, and deep dives into contemporary Tamil literature.
+                    </p>
+</div>
+<form class="space-y-8" id="newsletter-form" name="newsletter-page" method="POST" data-netlify="true">
+<input type="hidden" name="form-name" value="newsletter-page" />
+<div class="relative group">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 group-focus-within:text-primary transition-colors" for="email">Email Address</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-body-lg placeholder:text-outline-variant/60 transition-all" id="email" name="email" placeholder="kavignar@koovel.com" required type="email"/>
+<div class="absolute bottom-0 left-0 h-[2px] bg-primary w-0 group-focus-within:w-full transition-all duration-500"></div>
+</div>
+<div class="space-y-4">
+<button class="w-full bg-primary text-on-primary py-5 rounded-lg font-label-caps text-label-caps flex items-center justify-center gap-3 lift-tilt group" type="submit">
+<span>Get the Invitation</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center font-caption text-caption text-on-surface-variant/70">
+                            By subscribing, you agree to our <a class="underline hover:text-primary transition-colors" href="/about">Privacy Policy</a>. No spam, ever.
+                        </p>
+</div>
+</form>
+<!-- Success Message (Hidden by default) -->
+<div class="hidden text-center py-10" id="success-msg">
+<div class="w-16 h-16 bg-on-tertiary-container/20 text-tertiary-container rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-[32px]">done_all</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary mb-2">Welcome to the Circle</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Please check your inbox to confirm your subscription.</p>
+</div>
+</div>
+</div>
+<!-- Decorative Floating Botanical Element -->
+<div class="absolute top-1/4 right-[10%] hidden xl:block animate-float pointer-events-none opacity-20">
+<span class="material-symbols-outlined text-[120px] text-tertiary">eco</span>
+</div>
+</BaseLayout>
+
+<script is:inline>
+// Scroll Reveal Implementation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Form Submission Interaction
+        const form = document.getElementById('newsletter-form');
+        const successMsg = document.getElementById('success-msg');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.style.opacity = '0';
+            setTimeout(() => {
+                form.classList.add('hidden');
+                successMsg.classList.remove('hidden');
+                successMsg.classList.add('animate-float');
+            }, 300);
+        });
+
+        // Hover tilt effect enhancement via JS for smoothness if needed
+        const tiltCards = document.querySelectorAll('.lift-tilt');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                // Subtle dynamic tilt could be added here for even more high-fidelity feel
+            });
+        });
+</script>

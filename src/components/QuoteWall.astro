@@ -1,0 +1,210 @@
+---
+import { getCollection } from 'astro:content';
+
+const interviews = await getCollection('interviews');
+
+// ஒவ்வொரு interview-இன் pullQuotes-ஐயும் தட்டையாக்கி, அதன் category-யையும் இணைத்து single list ஆக்குதல்
+const allQuotes = interviews.flatMap((entry) =>
+  entry.data.pullQuotes.map((q) => ({
+    quote: q,
+    name: entry.data.authorName,
+    role: entry.data.authorRole || '',
+    photo: entry.data.authorPhoto,
+    slug: entry.slug,
+    category: entry.data.category || 'இலக்கியம்',
+  }))
+);
+
+// எதுவும் இல்லைனா, placeholder quotes காட்டு (content இன்னும் இல்லாத போது demo-க்கு)
+const fallback = [
+  { quote: "எழுத்து என்பது அமைதியின் இன்னொரு குரல்.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "கவிஞர்", photo: "", slug: null, category: "கவிதை" },
+  { quote: "மொழி வாழும்போது மட்டுமே நினைவுகள் வாழ்கின்றன.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "நாவலாசிரியர்", photo: "", slug: null, category: "இலக்கியம்" },
+  { quote: "ஒவ்வொரு கதையும் ஒரு கண்ணாடி — நம்மைத் திருப்பிக் காட்டுகிறது.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "சிறுகதை எழுத்தாளர்", photo: "", slug: null, category: "இலக்கியம்" },
+  { quote: "வாசிப்பு என்பது தனிமையில் கண்டடையும் தோழமை.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "கட்டுரையாளர்", photo: "", slug: null, category: "கட்டுரை" },
+  { quote: "கலை என்பது கண்ணுக்குத் தெரியாததை காட்டும் கண்ணாடி.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "ஓவியர்", photo: "", slug: null, category: "கலை" },
+  { quote: "இசை என்பது சொற்கள் தோற்கும் இடத்தில் தொடங்குகிறது.", name: "எழுத்தாளர் பெயர் (placeholder)", role: "இசையமைப்பாளர்", photo: "", slug: null, category: "இசை" },
+];
+
+const quotes = allQuotes.length > 0 ? allQuotes : fallback;
+
+// tint cycling — ஒவ்வொரு quote-க்கும் ஒரு light-tint நிறம், வரிசையாக cycle ஆகும்
+const tints = ['tint-blue', 'tint-sage', 'tint-gold', 'tint-plum', 'tint-olive'];
+const withTint = (item, i) => ({ ...item, tint: tints[i % tints.length] });
+
+const row1 = [...quotes, ...quotes].map(withTint);
+const row2 = [...quotes].reverse().concat([...quotes].reverse()).map((item, i) => withTint(item, i + 2));
+---
+<section class="py-section-gap relative overflow-hidden">
+  <div class="absolute top-1/2 left-0 w-full h-1/2 bg-surface-dim/30 -z-10"></div>
+
+  <div class="pm-wall reveal active">
+    <div class="pm-particles">
+      {[...Array(10)].map((_, i) => (
+        <span class="pm-petal" style={`left:${(i * 9.5 + 3)}%; animation-duration:${14 + (i % 5) * 3}s; animation-delay:-${i * 2.2}s;`}></span>
+      ))}
+    </div>
+    <div class="pm-row-depth pm-row-back">
+      <div class="pm-row pm-left">
+        {row1.map((item, i) => (
+          item.slug ? (
+            <a href={`/interview/${item.slug}`} class={`pm-card no-underline ${item.tint}`}>
+              <span class="pm-cat-tag">{item.category}</span>
+              <span class="pm-mark">"</span>
+              <p class="pm-quote-ta">{item.quote}</p>
+              <div class="pm-attribution">
+                <div class="pm-avatar" style={item.photo ? `background-image:url('${item.photo}')` : ''}></div>
+                <div>
+                  <div class="pm-name">{item.name}</div>
+                  <div class="pm-role">{item.role}</div>
+                </div>
+              </div>
+              <span class="pm-readmore">முழு நேர்காணலைப் படிக்க <span class="material-symbols-outlined">north_east</span></span>
+            </a>
+          ) : (
+            <div class={`pm-card ${item.tint}`}>
+              <span class="pm-cat-tag">{item.category}</span>
+              <span class="pm-mark">"</span>
+              <p class="pm-quote-ta">{item.quote}</p>
+              <div class="pm-attribution">
+                <div class="pm-avatar"></div>
+                <div>
+                  <div class="pm-name">{item.name}</div>
+                  <div class="pm-role">{item.role}</div>
+                </div>
+              </div>
+            </div>
+          )
+        ))}
+      </div>
+    </div>
+    <div class="pm-row-depth pm-row-front">
+      <div class="pm-row pm-right">
+        {row2.map((item, i) => (
+          item.slug ? (
+            <a href={`/interview/${item.slug}`} class={`pm-card no-underline ${item.tint}`}>
+              <span class="pm-cat-tag">{item.category}</span>
+              <span class="pm-mark">"</span>
+              <p class="pm-quote-ta">{item.quote}</p>
+              <div class="pm-attribution">
+                <div class="pm-avatar" style={item.photo ? `background-image:url('${item.photo}')` : ''}></div>
+                <div>
+                  <div class="pm-name">{item.name}</div>
+                  <div class="pm-role">{item.role}</div>
+                </div>
+              </div>
+              <span class="pm-readmore">முழு நேர்காணலைப் படிக்க <span class="material-symbols-outlined">north_east</span></span>
+            </a>
+          ) : (
+            <div class={`pm-card ${item.tint}`}>
+              <span class="pm-cat-tag">{item.category}</span>
+              <span class="pm-mark">"</span>
+              <p class="pm-quote-ta">{item.quote}</p>
+              <div class="pm-attribution">
+                <div class="pm-avatar"></div>
+                <div>
+                  <div class="pm-name">{item.name}</div>
+                  <div class="pm-role">{item.role}</div>
+                </div>
+              </div>
+            </div>
+          )
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-10 right-10 w-32 h-32 botanical-accent animate-pulse">
+    <span class="material-symbols-outlined text-[100px] text-tertiary">filter_vintage</span>
+  </div>
+</section>
+
+<style>
+  /* Moving Quote Wall — இந்த component-க்குள்ளேயே scoped */
+  .pm-wall { position: relative; display: flex; flex-direction: column; gap: 26px; padding: 10px 0 6px; }
+
+  /* Depth: பின்னணி row சிறியதா — முழு opacity-லேயே (transparent/glass இல்லை) */
+  .pm-row-depth.pm-row-back { transform: scale(0.94); }
+  .pm-row-depth.pm-row-front { position: relative; z-index: 2; }
+
+  .pm-row { display: flex; width: max-content; gap: 28px; will-change: transform; }
+  .pm-row.pm-left { animation: pmScrollLeft 60s linear infinite; }
+  .pm-row.pm-right { animation: pmScrollRight 65s linear infinite; }
+  .pm-row:hover { animation-play-state: paused; }
+  @keyframes pmScrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pmScrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+  /* ஒவ்வொரு card-உம் தனித்தனி rhythm-ல மெதுவா sway ஆகும் */
+  @keyframes pmBob1 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-0.6deg); } }
+  @keyframes pmBob2 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(0.7deg); } }
+  @keyframes pmBob3 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-13px) rotate(-0.4deg); } }
+
+  .pm-card {
+    position: relative; flex: 0 0 auto; width: 400px; padding: 38px 34px;
+    border: 1px solid; border-radius: 18px;
+    box-shadow: 0 10px 28px -12px rgba(27, 77, 145, 0.28);
+    transition: box-shadow .35s ease, transform .3s ease;
+    display: block; cursor: default;
+  }
+  .pm-card:nth-child(3n+1) { animation: pmBob1 7s ease-in-out infinite; }
+  .pm-card:nth-child(3n+2) { animation: pmBob2 8.5s ease-in-out infinite; }
+  .pm-card:nth-child(3n+3) { animation: pmBob3 6.2s ease-in-out infinite; }
+  a.pm-card { cursor: pointer; }
+  .pm-card:hover { box-shadow: 0 22px 44px -16px rgba(27, 77, 145, 0.38); transform: translateY(-4px); z-index: 5; }
+
+  /* vibrant light-tint variants — brand palette-க்குள்ளேயே */
+  .pm-card.tint-blue { background: linear-gradient(155deg, #DCE9FB, #B9D3F5); border-color: #9FC2EE; }
+  .pm-card.tint-blue .pm-cat-tag { background: #1B4D91; color: #fff; }
+
+  .pm-card.tint-sage { background: linear-gradient(155deg, #DCEEDA, #B4DAAF); border-color: #9FCB98; }
+  .pm-card.tint-sage .pm-cat-tag { background: #4A7144; color: #fff; }
+
+  .pm-card.tint-gold { background: linear-gradient(155deg, #FBEBC4, #F3D48A); border-color: #E8C468; }
+  .pm-card.tint-gold .pm-cat-tag { background: #9A741A; color: #fff; }
+
+  .pm-card.tint-plum { background: linear-gradient(155deg, #EBDCF3, #D3B0E3); border-color: #C295D9; }
+  .pm-card.tint-plum .pm-cat-tag { background: #692475; color: #fff; }
+
+  .pm-card.tint-olive { background: linear-gradient(155deg, #EAE7BE, #D6D28C); border-color: #C3BF72; }
+  .pm-card.tint-olive .pm-cat-tag { background: #5A5B3C; color: #fff; }
+
+  .pm-cat-tag {
+    display: inline-block; font-family: 'Manrope', sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .pm-mark { font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 48px; color: #4F7FBF; opacity: .85; line-height: .4; display: block; margin-bottom: 18px; }
+  .pm-quote-ta { font-family: 'Noto Serif Tamil', serif; font-weight: 500; font-size: 20px; line-height: 1.7; color: #1A2938; margin-bottom: 22px; min-height: 90px; }
+  .pm-attribution { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(27, 77, 145, .12); }
+  .pm-avatar { width: 38px; height: 38px; border-radius: 50%; flex: 0 0 auto; background: linear-gradient(140deg, #4F7FBF, #1B4D91); background-size: cover; background-position: center; }
+  .pm-name { font-family: 'Manrope', sans-serif; font-size: 14px; color: #1B4D91; font-weight: 600; }
+  .pm-role { font-family: 'Manrope', sans-serif; font-size: 12px; color: #6A6B4E; margin-top: 2px; letter-spacing: .02em; }
+  .pm-readmore {
+    display: flex; align-items: center; gap: 6px; margin-top: 16px;
+    font-family: 'Manrope', sans-serif; font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+    color: #82AB7D; font-weight: 600; opacity: 0; transform: translateY(4px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .pm-readmore .material-symbols-outlined { font-size: 16px; }
+  a.pm-card:hover .pm-readmore { opacity: 1; transform: translateY(0); }
+
+  /* பின்னணியில் மிதக்கும் sage-green இலைத்துணுக்குகள் */
+  .pm-particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .pm-petal {
+    position: absolute; bottom: -20px; width: 10px; height: 10px;
+    background: #82AB7D; opacity: 0; border-radius: 60% 0 60% 0;
+    animation: pmDrift linear infinite;
+  }
+  @keyframes pmDrift {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: .45; }
+    90% { opacity: .3; }
+    100% { transform: translateY(-360px) translateX(24px) rotate(180deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm-row.pm-left, .pm-row.pm-right, .pm-card, .pm-petal { animation: none !important; }
+  }
+  @media (max-width: 640px) {
+    .pm-card { width: 300px; padding: 28px 24px; }
+    .pm-quote-ta { font-size: 17px; min-height: auto; }
+  }
+</style>

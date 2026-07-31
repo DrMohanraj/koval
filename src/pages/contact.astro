@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="தொடர்பு - கூவல்">
+<!-- Hero Section -->
+<section class="px-margin-desktop mt-stack-lg max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-end">
+<div class="md:col-span-7 reveal">
+<span class="font-label-caps text-label-caps text-on-tertiary-fixed-variant mb-stack-sm block uppercase tracking-[0.2em]">தொடர்புக்கு</span>
+<h1 class="font-display-lg text-display-lg text-primary leading-tight mt-stack-sm">உரையாடலைத் தொடங்குவோம்</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-md max-w-xl">
+                        இலக்கியம், கலை மற்றும் பண்பாட்டுத் தளத்தில் உங்கள் எண்ணங்களையும் படைப்புகளையும் எங்களுடன் பகிர்ந்து கொள்ள அழைக்கிறோம்.
+                    </p>
+</div>
+<div class="md:col-span-5 hidden md:block">
+<!-- Botanical Element -->
+<div class="relative w-full aspect-square opacity-20">
+<div class="absolute inset-0 botanical-overlay">
+<img class="w-full h-full object-contain" data-alt="A delicate, minimalist botanical illustration featuring ethereal lavender and sage green eucalyptus leaves and wild flora. The style is soft watercolor on a cream paper texture, perfectly capturing the scholarly and refined aesthetic of a high-end literary journal. The lighting is bright and airy, reflecting a sophisticated and calming atmosphere." src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Form & Info Grid -->
+<section class="px-margin-desktop mt-stack-lg max-w-7xl mx-auto relative">
+<!-- Decorative leaf in background -->
+<div class="absolute -left-20 top-0 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[200px] text-tertiary">eco</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-section-gap pt-stack-lg">
+<!-- Contact Form -->
+<div class="md:col-span-7 reveal">
+<form class="space-y-stack-lg" name="contact" method="POST" data-netlify="true">
+<input type="hidden" name="form-name" value="contact" />
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors">பெயர் / Name</label>
+<input class="w-full contact-input font-body-md text-on-surface" name="name" placeholder="உங்கள் முழுப் பெயர்" type="text"/>
+</div>
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors">மின்னஞ்சல் / Email</label>
+<input class="w-full contact-input font-body-md text-on-surface" name="email" placeholder="example@domain.com" type="email"/>
+</div>
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors">பொருள் / Subject</label>
+<select class="w-full contact-input font-body-md text-on-surface appearance-none bg-transparent">
+<option>படைப்புகள் சமர்ப்பித்தல்</option>
+<option>விளம்பரத் தொடர்புகள்</option>
+<option>பொதுவான விசாரணைகள்</option>
+</select>
+</div>
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors">செய்தி / Message</label>
+<textarea class="w-full contact-input font-body-md text-on-surface resize-none" name="message" placeholder="உங்கள் செய்தியை இங்கே உள்ளிடவும்..." rows="4"></textarea>
+</div>
+<div class="pt-stack-md">
+<button class="bg-primary text-on-primary px-10 py-4 rounded-full font-label-caps text-label-caps tracking-widest hover:bg-primary-container hover:shadow-lg transition-all lift-tilt" type="submit">
+                                அஞ்சல் செய்க / Send Message
+                            </button>
+</div>
+</form>
+</div>
+<!-- Info Cards -->
+<div class="md:col-span-5 space-y-gutter reveal">
+<!-- Office Location -->
+<div class="p-stack-lg border border-outline-variant/30 rounded-xl bg-surface-container-low lift-tilt">
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-md">அலுவலகம்</h3>
+<div class="space-y-stack-sm font-caption text-caption text-on-surface-variant">
+<div class="flex gap-stack-sm">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<p>12/4, இலக்கியச் சாலை,<br/>மயிலாப்பூர், சென்னை - 600004.</p>
+</div>
+</div>
+<div class="mt-stack-lg w-full h-48 rounded-lg overflow-hidden grayscale contrast-125 opacity-80">
+<img class="w-full h-full object-cover" data-location="Mylapore, Chennai" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&h=675&fit=crop&q=80"/>
+</div>
+</div>
+<!-- Direct Connect -->
+<div class="p-stack-lg border border-outline-variant/30 rounded-xl bg-surface-container-low lift-tilt">
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-md">நேரடித் தொடர்பு</h3>
+<div class="space-y-stack-md">
+<a class="flex items-center gap-stack-sm group" href="mailto:editor@koovel.com">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant opacity-60">Email</p>
+<p class="font-caption text-caption text-on-surface">editor@koovel.com</p>
+</div>
+</a>
+<a class="flex items-center gap-stack-sm group" href="tel:+919876543210">
+<div class="w-10 h-10 rounded-full bg-on-tertiary-container/20 flex items-center justify-center text-tertiary group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">call</span>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant opacity-60">Phone</p>
+<p class="font-caption text-caption text-on-surface">+91 98765 43210</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / Community Section -->
+<section class="mt-section-gap px-margin-desktop py-section-gap bg-surface-container reveal">
+<div class="max-w-4xl mx-auto text-center">
+<span class="material-symbols-outlined text-primary text-5xl mb-stack-md">auto_stories</span>
+<h2 class="font-display-lg text-display-lg text-primary mb-stack-md">உங்களுடன் இணைந்திருக்க...</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">
+                    எமது மாத இதழ் மற்றும் இலக்கியக் கட்டுரைகளைப் பெற எமது மின்னஞ்சல் மடலில் இணையுங்கள்.
+                </p>
+<form name="contact-page-newsletter" method="POST" data-netlify="true" class="flex flex-col md:flex-row gap-stack-sm justify-center">
+<input type="hidden" name="form-name" value="contact-page-newsletter" />
+<input class="px-6 py-4 rounded-full border border-outline-variant bg-surface min-w-[320px] focus:outline-none focus:border-primary" name="email" placeholder="உங்கள் மின்னஞ்சல் முகவரி" type="email"/>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-label-caps text-label-caps hover:bg-primary-container transition-all" type="submit">சந்தா சேர்க</button>
+</form>
+</div>
+</section>
+</BaseLayout>
+
+<script is:inline>
+// Intersection Observer for Scroll Reveal
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Form Focus Effects
+        document.querySelectorAll('.contact-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                if (!input.value) {
+                    input.parentElement.querySelector('label').classList.remove('text-primary');
+                }
+            });
+        });
+</script>
