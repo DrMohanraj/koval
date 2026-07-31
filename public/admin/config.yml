@@ -1,8 +1,8 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME   # ⚠️ இதை உங்க actual GitHub username/repo-ஆ மாத்துங்க
+  repo: DrMohanraj/koval   # ⚠️ இதை உங்க actual GitHub username/repo-ஆ மாத்துங்க
   branch: main
-  base_url: https://YOUR_SITE.pages.dev        # ⚠️ இதை உங்க Cloudflare Pages domain-ஆ மாத்துங்க
+  base_url: https://koval.pomohanraj.workers.dev/       # ⚠️ இதை உங்க Cloudflare Pages domain-ஆ மாத்துங்க
   auth_endpoint: auth
 
 # GitHub OAuth மூலம் CMS login — Cloudflare Pages Functions (/functions/auth.js, /functions/callback.js)
